@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate CV Builder - Professional & Creative Styles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Template Specific Fonts */
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-oswald { font-family: 'Oswald', sans-serif; }
+        .font-raleway { font-family: 'Raleway', sans-serif; }
+        .font-bebas { font-family: 'Bebas Neue', cursive; }
+        .font-space { font-family: 'Space Grotesk', sans-serif; }
+        
+        /* Print Styles */
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white !important; }
+            #cv-container { box-shadow: none !important; margin: 0 !important; }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        
+        /* Color Picker Customization */
+        input[type="color"] { -webkit-appearance: none; border: none; width: 32px; height: 32px; border-radius: 50%; overflow: hidden; cursor: pointer; }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
+        
+        /* Range Slider */
+        input[type="range"] { -webkit-appearance: none; height: 6px; border-radius: 3px; background: #e5e7eb; outline: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #3b82f6; cursor: pointer; }
+        
+        /* Template Previews */
+        .template-card { transition: all 0.3s ease; cursor: pointer; }
+        .template-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        .template-card.active { ring: 2px solid #3b82f6; ring-offset: 2px; }
+        
+        /* CV Container */
+        #cv-container { transition: all 0.3s ease; }
+        
+        /* Draggable Elements */
+        .draggable-item { cursor: move; }
+        .draggable-item.dragging { opacity: 0.5; }
+        
+        /* Template 1: Modern Minimalist */
+        .template-modern-minimalist { background: white; }
+        
+        /* Template 2: Classic Professional */
+        .template-classic-pro { background: white; border-top: 8px solid var(--primary-color, #1e40af); }
+        
+        /* Template 3: Creative Sidebar */
+        .template-creative-sidebar { display: grid; grid-template-columns: 300px 1fr; min-height: 100%; }
+        
+        /* Template 4: Two Column Technical */
+        .template-two-column-tech { column-count: 2; column-gap: 40px; }
+        
+        /* Template 5: Executive Header */
+        .template-executive { background: linear-gradient(to bottom, var(--primary-color, #1e293b) 200px, white 200px); }
+        
+        /* Template 6: Timeline Vertical */
+        .template-timeline { position: relative; }
+        .template-timeline::before { content: ''; position: absolute; left: 120px; top: 0; bottom: 0; width: 2px; background: var(--primary-color, #e5e7eb); }
+        
+        /* Template 7: Card Based */
+        .template-cards .section-card { background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        
+        /* Template 8: Dark Mode Professional */
+        .template-dark-pro { background: #0f172a; color: #f8fafc; }
+        .template-dark-pro .text-gray-600, .template-dark-pro .text-gray-700, .template-dark-pro .text-gray-800 { color: #cbd5e1 !important; }
+        
+        /* Template 9: Colorful Vibrant */
+        .template-colorful { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; }
+        .template-colorful .cv-content { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        
+        /* Template 10: Grid Layout */
+        .template-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+        
+        /* Template 11: Centered Focus */
+        .template-centered { text-align: center; max-width: 700px; margin: 0 auto; }
+        
+        /* Template 12: Left Heavy */
+        .template-left-heavy { padding-left: 60px; border-left: 4px solid var(--primary-color, #3b82f6); }
+        
+        /* Template 13: Right Heavy */
+        .template-right-heavy { padding-right: 60px; border-right: 4px solid var(--primary-color, #3b82f6); text-align: right; }
+        .template-right-heavy .flex { flex-direction: row-reverse; }
+        
+        /* Template 14: Compact Single Page */
+        .template-compact { font-size: 0.9rem; line-height: 1.4; padding: 30px; }
+        
+        /* Template 15: Magazine Style */
+        .template-magazine { background: #fafafa; }
+        .template-magazine .headline { font-size: 3rem; font-weight: 900; text-transform: uppercase; letter-spacing: -2px; }
+        
+        /* Template 16: Infographic Heavy */
+        .template-infographic .skill-bar { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+        .template-infographic .skill-fill { height: 100%; background: var(--primary-color, #3b82f6); border-radius: 4px; }
+        
+        /* Template 17: Minimal Text */
+        .template-minimal-text { padding: 60px; }
+        .template-minimal-text h1 { font-weight: 300; letter-spacing: 0.2em; }
+        
+        /* Template 18: Bold Typography */
+        .template-bold-type { font-weight: 900; text-transform: uppercase; }
+        .template-bold-type h1 { font-size: 4rem; line-height: 0.9; }
+        
+        /* Template 19: Photo Focus */
+        .template-photo-focus .photo-container { width: 200px; height: 200px; border-radius: 50%; overflow: hidden; margin: 0 auto 30px; border: 5px solid var(--primary-color, #3b82f6); }
+        
+        /* Template 20: Contact Bottom */
+        .template-contact-bottom { display: flex; flex-direction: column; }
+        .template-contact-bottom .contact-section { order: 999; margin-top: 40px; padding-top: 40px; border-top: 2px solid #e5e7eb; }
+        
+        /* Template 21: Striped Sections */
+        .template-striped section:nth-child(odd) { background: #f8fafc; padding: 20px; margin: 0 -40px; padding-left: 40px; padding-right: 40px; }
+        
+        /* Template 22: Elegant Serif */
+        .template-elegant { font-family: 'Playfair Display', serif; }
+        .template-elegant h1, .template-elegant h2 { font-weight: 400; letter-spacing: -1px; }
+        
+        /* Position Classes */
+        .pos-top-left { position: absolute; top: 20px; left: 20px; }
+        .pos-top-center { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); }
+        .pos-top-right { position: absolute; top: 20px; right: 20px; }
+        .pos-bottom-left { position: absolute; bottom: 20px; left: 20px; }
+        .pos-bottom-center { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); }
+        .pos-bottom-right { position: absolute; bottom: 20px; right: 20px; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Control Panel (No Print) -->
+    <div class="no-print bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-full mx-auto px-4 py-3">
+            <div class="flex flex-wrap items-center gap-4 justify-between">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="file-text" class="w-6 h-6 text-blue-600"></i>
+                    <h1 class="font-bold text-lg text-gray-800">CV Master Builder</h1>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-3">
+                    <button onclick="togglePanel('templates-panel')" class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition flex items-center gap-2 text-sm font-medium">
+                        <i data-lucide="layout" class="w-4 h-4"></i> Styles (22)
+                    </button>
+                    <button onclick="togglePanel('customize-panel')" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition flex items-center gap-2 text-sm font-medium">
+                        <i data-lucide="sliders" class="w-4 h-4"></i> Customize
+                    </button>
+                    <button onclick="togglePanel('content-panel')" class="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition flex items-center gap-2 text-sm font-medium">
+                        <i data-lucide="edit" class="w-4 h-4"></i> Content
+                    </button>
+                    <button onclick="window.print()" class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition flex items-center gap-2 text-sm font-medium">
+                        <i data-lucide="printer" class="w-4 h-4"></i> Print / PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Templates Panel -->
+        <div id="templates-panel" class="hidden border-t border-gray-200 bg-gray-50 max-h-96 overflow-y-auto">
+            <div class="p-4">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">Choose Your Style</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-3" id="template-grid">
+                    <!-- Template buttons generated by JS -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customize Panel -->
+        <div id="customize-panel" class="hidden border-t border-gray-200 bg-gray-50">
+            <div class="p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Primary Color</label>
+                    <div class="flex items-center gap-2">
+                        <input type="color" id="primary-color" value="#3b82f6" onchange="updateStyle()">
+                        <span class="text-sm text-gray-600" id="primary-color-value">#3b82f6</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Secondary Color</label>
+                    <div class="flex items-center gap-2">
+                        <input type="color" id="secondary-color" value="#1e40af" onchange="updateStyle()">
+                        <span class="text-sm text-gray-600" id="secondary-color-value">#1e40af</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Name Font Size</label>
+                    <input type="range" id="name-size" min="24" max="96" value="36" class="w-full" oninput="updateStyle()">
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>24px</span>
+                        <span id="name-size-value">36px</span>
+                        <span>96px</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Profession Font Size</label>
+                    <input type="range" id="profession-size" min="14" max="48" value="18" class="w-full" oninput="updateStyle()">
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>14px</span>
+                        <span id="profession-size-value">18px</span>
+                        <span>48px</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Name Color</label>
+                    <div class="flex items-center gap-2">
+                        <input type="color" id="name-color" value="#111827" onchange="updateStyle()">
+                        <span class="text-sm text-gray-600" id="name-color-value">#111827</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Profession Color</label>
+                    <div class="flex items-center gap-2">
+                        <input type="color" id="profession-color" value="#3b82f6" onchange="updateStyle()">
+                        <span class="text-sm text-gray-600" id="profession-color-value">#3b82f6</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Font Family</label>
+                    <select id="font-family" class="w-full text-sm border border-gray-300 rounded px-2 py-1" onchange="updateStyle()">
+                        <option value="font-sans">Inter (Modern)</option>
+                        <option value="font-playfair">Playfair (Elegant)</option>
+                        <option value="font-poppins">Poppins (Geometric)</option>
+                        <option value="font-mono">Roboto Mono (Technical)</option>
+                        <option value="font-oswald">Oswald (Condensed)</option>
+                        <option value="font-raleway">Raleway (Clean)</option>
+                        <option value="font-bebas">Bebas Neue (Bold)</option>
+                        <option value="font-space">Space Grotesk (Futuristic)</option>
+                    </select>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Photo Position</label>
+                    <select id="photo-position" class="w-full text-sm border border-gray-300 rounded px-2 py-1" onchange="updateStyle()">
+                        <option value="top-left">Top Left</option>
+                        <option value="top-center">Top Center</option>
+                        <option value="top-right">Top Right</option>
+                        <option value="inline">Inline with Text</option>
+                        <option value="hidden">Hidden</option>
+                    </select>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Section Spacing</label>
+                    <input type="range" id="section-spacing" min="0" max="60" value="24" class="w-full" oninput="updateStyle()">
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>0px</span>
+                        <span id="section-spacing-value">24px</span>
+                        <span>60px</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Page Padding</label>
+                    <input type="range" id="page-padding" min="20" max="80" value="40" class="w-full" oninput="updateStyle()">
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>20px</span>
+                        <span id="page-padding-value">40px</span>
+                        <span>80px</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Name Position</label>
+                    <select id="name-position" class="w-full text-sm border border-gray-300 rounded px-2 py-1" onchange="updateStyle()">
+                        <option value="default">Default</option>
+                        <option value="center">Center</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Contact Position</label>
+                    <select id="contact-position" class="w-full text-sm border border-gray-300 rounded px-2 py-1" onchange="updateStyle()">
+                        <option value="header">Below Header</option>
+                        <option value="sidebar">Sidebar Style</option>
+                        <option value="bottom">Bottom of CV</option>
+                        <option value="top">Top (Above Name)</option>
+                    </select>
+                </div>
+                
+                <div class="bg-white p-3 rounded-lg border border-gray-200 col-span-1 md:col-span-2">
+                    <label class="text-xs font-semibold text-gray-500 uppercase mb-2 block">Layout Positioning</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="setLayout('default')" class="px-3 py-2 text-xs bg-gray-100 hover:bg-gray-200 rounded transition">Default Flow</button>
+                        <button onclick="setLayout('split')" class="px-3 py-2 text-xs bg-gray-100 hover:bg-gray-200 rounded transition">Split View</button>
+                        <button onclick="setLayout('centered')" class="px-3 py-2 text-xs bg-gray-100 hover:bg-gray-200 rounded transition">Center Aligned</button>
+                        <button onclick="setLayout('wide')" class="px-3 py-2 text-xs bg-gray-100 hover:bg-gray-200 rounded transition">Wide Stretch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Panel -->
+        <div id="content-panel" class="hidden border-t border-gray-200 bg-gray-50 max-h-96 overflow-y-auto">
+            <div class="p-4 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="space-y-3">
+                    <h4 class="font-semibold text-sm text-gray-700 flex items-center gap-2">
+                        <i data-lucide="user" class="w-4 h-4"></i> Personal Info
+                    </h4>
+                    <input type="text" id="input-name" placeholder="Full Name" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                    <input type="text" id="input-profession" placeholder="Profession (e.g. Electrical Engineer)" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                    <input type="text" id="input-age" placeholder="Age (e.g. 22)" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                    <input type="file" id="input-photo" accept="image/*" class="w-full text-sm" onchange="updatePhoto()">
+                </div>
+                
+                <div class="space-y-3">
+                    <h4 class="font-semibold text-sm text-gray-700 flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-4 h-4"></i> Education
+                    </h4>
+                    <input type="text" id="input-degree" placeholder="Degree Title" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                    <input type="text" id="input-university" placeholder="University/Institution" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                    <input type="number" id="input-graduation-year" placeholder="Graduation Year" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                </div>
+                
+                <div class="space-y-3">
+                    <h4 class="font-semibold text-sm text-gray-700 flex items-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4"></i> Contact
+                    </h4>
+                    <input type="email" id="input-email" placeholder="Email Address" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                    <input type="tel" id="input-phone" placeholder="Phone Number" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                    <input type="text" id="input-location" placeholder="Location (City, Country)" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                    <input type="text" id="input-website" placeholder="Website/Portfolio URL" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()">
+                </div>
+                
+                <div class="space-y-3 md:col-span-2 lg:col-span-3">
+                    <h4 class="font-semibold text-sm text-gray-700 flex items-center gap-2">
+                        <i data-lucide="briefcase" class="w-4 h-4"></i> Experience & Skills
+                    </h4>
+                    <textarea id="input-experience" placeholder="Work Experience (Job Title | Company | Year - Year&#10;Description...)" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()"></textarea>
+                    <textarea id="input-skills" placeholder="Skills (separate with commas)" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()"></textarea>
+                    <textarea id="input-summary" placeholder="Professional Summary / About Me" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateContent()"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main CV Display Area -->
+    <div class="min-h-screen p-4 md:p-8 bg-gray-100">
+        <div id="cv-wrapper" class="max-w-4xl mx-auto bg-white shadow-2xl relative overflow-hidden" style="min-height: 1100px;">
+            <div id="cv-container" class="w-full h-full p-10 template-modern-minimalist animate-fade-in">
+                <!-- Dynamic Content Will Be Rendered Here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Template Definitions
+        const templates = [
+            { id: 'modern-minimalist', name: 'Modern Minimalist', icon: 'minimize-2' },
+            { id: 'classic-pro', name: 'Classic Professional', icon: 'briefcase' },
+            { id: 'creative-sidebar', name: 'Creative Sidebar', icon: 'sidebar' },
+            { id: 'two-column-tech', name: 'Two Column Tech', icon: 'columns' },
+            { id: 'executive', name: 'Executive Header', icon: 'crown' },
+            { id: 'timeline', name: 'Timeline Vertical', icon: 'arrow-down-circle' },
+            { id: 'cards', name: 'Card Based', icon: 'layout-grid' },
+            { id: 'dark-pro', name: 'Dark Mode Pro', icon: 'moon' },
+            { id: 'colorful', name: 'Colorful Vibrant', icon: 'palette' },
+            { id: 'grid', name: 'Grid Layout', icon: 'grid-3x3' },
+            { id: 'centered', name: 'Centered Focus', icon: 'align-center' },
+            { id: 'left-heavy', name: 'Left Heavy', icon: 'align-left' },
+            { id: 'right-heavy', name: 'Right Heavy', icon: 'align-right' },
+            { id: 'compact', name: 'Compact Single Page', icon: 'file-minus' },
+            { id: 'magazine', name: 'Magazine Style', icon: 'book-open' },
+            { id: 'infographic', name: 'Infographic Heavy', icon: 'bar-chart-2' },
+            { id: 'minimal-text', name: 'Minimal Text', icon: 'type' },
+            { id: 'bold-type', name: 'Bold Typography', icon: 'bold' },
+            { id: 'photo-focus', name: 'Photo Focus', icon: 'camera' },
+            { id: 'contact-bottom', name: 'Contact Bottom', icon: 'arrow-down' },
+            { id: 'striped', name: 'Striped Sections', icon: 'minus' },
+            { id: 'elegant', name: 'Elegant Serif', icon: 'feather' }
+        ];
+
+        // State
+        let currentTemplate = 'modern-minimalist';
+        let cvData = {
+            name: 'Diyar KRD',
+            profession: 'Electrical Engineer',
+            age: '22',
+            degree: 'Bachelor of Electrical Engineering',
+            university: 'University of Technology',
+            graduationYear: '2023',
+            email: 'diyar.krd@email.com',
+            phone: '+964 750 123 4567',
+            location: 'Erbil, Iraq',
+            website: 'diyarkrd.github.io',
+            experience: 'Senior Electrical Engineer | KRD Electric Co. | 2021-Present\n• Designed electrical systems for commercial buildings\n• Managed team of 5 junior engineers\n• Reduced energy costs by 30% through optimization\n\nJunior Engineer | Power Solutions | 2019-2021\n• Assisted in power distribution design\n• Conducted safety inspections',
+            skills: 'AutoCAD, MATLAB, PLC Programming, Electrical Design, Project Management, Power Systems, Renewable Energy',
+            summary: 'Dedicated Electrical Engineer with 4+ years of experience in power systems design and renewable energy solutions. Proven track record in optimizing electrical systems and leading successful project teams.',
+            photo: null
+        };
+
+        // Helper function to create labeled contact items with icons
+        function createContactItem(icon, label, value, color) {
+            return `<div class="flex items-center gap-2 text-sm"><i data-lucide="${icon}" class="w-4 h-4" style="color: ${color}"></i><span><strong>${label}:</strong> ${value}</span></div>`;
+        }
+
+        // Helper function for education with clear labeling
+        function createEducationBlock(degree, university, year, color) {
+            return `
+                <div class="mb-3">
+                    <div class="font-semibold text-gray-800 text-lg">${degree}</div>
+                    <div class="text-gray-600 flex items-center gap-2 mt-1">
+                        <i data-lucide="building-2" class="w-4 h-4" style="color: ${color}"></i>
+                        <span>${university}</span>
+                    </div>
+                    <div class="text-sm text-gray-600 flex items-center gap-2 mt-1 bg-gray-50 px-3 py-1 rounded-full inline-flex">
+                        <i data-lucide="calendar-days" class="w-4 h-4" style="color: ${color}"></i>
+                        <span><strong>Graduation Year:</strong> ${year}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Helper for age display
+        function createAgeBadge(age, color) {
+            return `<div class="flex items-center gap-2 bg-blue-50 px-3 py-1 rounded-full text-sm inline-flex"><i data-lucide="calendar" class="w-4 h-4" style="color: ${color}"></i><span><strong>Age:</strong> ${age} years</span></div>`;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTemplateButtons();
+            loadData();
+            renderCV();
+            lucide.createIcons();
+        });
+
+        function renderTemplateButtons() {
+            const grid = document.getElementById('template-grid');
+            grid.innerHTML = templates.map(t => `
+                <div class="template-card ${t.id === currentTemplate ? 'active' : ''} bg-white p-3 rounded-lg border border-gray-200 text-center" onclick="switchTemplate('${t.id}')" data-template="${t.id}">
+                    <i data-lucide="${t.icon}" class="w-6 h-6 mx-auto mb-2 text-gray-600"></i>
+                    <span class="text-xs font-medium text-gray-700 block leading-tight">${t.name}</span>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function switchTemplate(templateId) {
+            currentTemplate = templateId;
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.classList.toggle('active', card.dataset.template === templateId);
+            });
+            renderCV();
+        }
+
+        function togglePanel(panelId) {
+            const panel = document.getElementById(panelId);
+            const allPanels = ['templates-panel', 'customize-panel', 'content-panel'];
+            
+            allPanels.forEach(id => {
+                if (id !== panelId) document.getElementById(id).classList.add('hidden');
+            });
+            
+            panel.classList.toggle('hidden');
+        }
+
+        function updateStyle() {
+            renderCV();
+        }
+
+        function updateContent() {
+            cvData.name = document.getElementById('input-name').value || cvData.name;
+            cvData.profession = document.getElementById('input-profession').value || cvData.profession;
+            cvData.age = document.getElementById('input-age').value || cvData.age;
+            cvData.degree = document.getElementById('input-degree').value || cvData.degree;
+            cvData.university = document.getElementById('input-university').value || cvData.university;
+            cvData.graduationYear = document.getElementById('input-graduation-year').value || cvData.graduationYear;
+            cvData.email = document.getElementById('input-email').value || cvData.email;
+            cvData.phone = document.getElementById('input-phone').value || cvData.phone;
+            cvData.location = document.getElementById('input-location').value || cvData.location;
+            cvData.website = document.getElementById('input-website').value || cvData.website;
+            cvData.experience = document.getElementById('input-experience').value || cvData.experience;
+            cvData.skills = document.getElementById('input-skills').value || cvData.skills;
+            cvData.summary = document.getElementById('input-summary').value || cvData.summary;
+            
+            localStorage.setItem('cvData', JSON.stringify(cvData));
+            renderCV();
+        }
+
+        function updatePhoto() {
+            const file = document.getElementById('input-photo').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    cvData.photo = e.target.result;
+                    renderCV();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('cvData');
+            if (saved) {
+                cvData = JSON.parse(saved);
+                // Populate inputs
+                document.getElementById('input-name').value = cvData.name;
+                document.getElementById('input-profession').value = cvData.profession;
+                document.getElementById('input-age').value = cvData.age;
+                document.getElementById('input-degree').value = cvData.degree;
+                document.getElementById('input-university').value = cvData.university;
+                document.getElementById('input-graduation-year').value = cvData.graduationYear;
+                document.getElementById('input-email').value = cvData.email;
+                document.getElementById('input-phone').value = cvData.phone;
+                document.getElementById('input-location').value = cvData.location;
+                document.getElementById('input-website').value = cvData.website;
+                document.getElementById('input-experience').value = cvData.experience;
+                document.getElementById('input-skills').value = cvData.skills;
+                document.getElementById('input-summary').value = cvData.summary;
+            }
+        }
+
+        function getStyles() {
+            return {
+                primaryColor: document.getElementById('primary-color').value,
+                secondaryColor: document.getElementById('secondary-color').value,
+                nameSize: document.getElementById('name-size').value + 'px',
+                professionSize: document.getElementById('profession-size').value + 'px',
+                nameColor: document.getElementById('name-color').value,
+                professionColor: document.getElementById('profession-color').value,
+                fontFamily: document.getElementById('font-family').value,
+                photoPosition: document.getElementById('photo-position').value,
+                sectionSpacing: document.getElementById('section-spacing').value + 'px',
+                pagePadding: document.getElementById('page-padding').value + 'px',
+                namePosition: document.getElementById('name-position')?.value || 'default',
+                contactPosition: document.getElementById('contact-position')?.value || 'header'
+            };
+        }
+
+        function renderPhoto(styles) {
+            if (styles.photoPosition === 'hidden') return '';
+            
+            const photoHtml = cvData.photo ? 
+                `<img src="${cvData.photo}" class="w-full h-full object-cover" alt="Profile">` :
+                `<div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400"><i data-lucide="user" class="w-12 h-12"></i></div>`;
+            
+            const photoClass = styles.photoPosition === 'inline' ? 'inline-block mr-4 mb-4 float-left w-32 h-32' : 
+                              styles.photoPosition === 'top-center' ? 'mx-auto mb-6 w-40 h-40 rounded-full overflow-hidden' :
+                              'absolute w-32 h-32 rounded-lg overflow-hidden shadow-lg';
+            
+            const positionStyle = styles.photoPosition === 'top-left' ? 'top: 40px; left: 40px;' :
+                                   styles.photoPosition === 'top-right' ? 'top: 40px; right: 40px;' :
+                                   styles.photoPosition === 'top-center' ? '' : '';
+            
+            return `<div class="${photoClass}" style="${positionStyle}">${photoHtml}</div>`;
+        }
+
+        function renderCV() {
+            const styles = getStyles();
+            const container = document.getElementById('cv-container');
+            
+            // Update container styles
+            container.className = `w-full h-full template-${currentTemplate} ${styles.fontFamily} animate-fade-in`;
+            container.style.padding = styles.pagePadding;
+            container.style.setProperty('--primary-color', styles.primaryColor);
+            container.style.setProperty('--secondary-color', styles.secondaryColor);
+            
+            // Generate content based on template
+            const content = generateTemplateContent(currentTemplate, styles);
+            container.innerHTML = content;
+            
+            // Reinitialize icons
+            lucide.createIcons();
+        }
+
+        function generateTemplateContent(template, styles) {
+            const photoHtml = renderPhoto(styles);
+            
+            // Common components with clear labeling
+            const headerInfo = `
+                <div class="header-content mb-6" style="margin-left: ${styles.photoPosition === 'top-left' ? '160px' : '0'}; margin-right: ${styles.photoPosition === 'top-right' ? '160px' : '0'};">
+                    <h1 class="name font-bold mb-2" style="font-size: ${styles.nameSize}; color: ${styles.nameColor}; line-height: 1.2;">${cvData.name}</h1>
+                    <p class="profession font-medium mb-4" style="font-size: ${styles.professionSize}; color: ${styles.professionColor};">${cvData.profession}</p>
+                    ${styles.photoPosition === 'top-center' ? photoHtml : ''}
+                </div>
+            `;
+            
+            // Universal contact section with clear labels and icons
+            const contactSection = `
+                <div class="contact-section mb-6 flex flex-wrap gap-3 text-sm">
+                    ${createAgeBadge(cvData.age, styles.primaryColor)}
+                    <div class="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full text-sm">
+                        <i data-lucide="mail" class="w-4 h-4" style="color: ${styles.primaryColor}"></i>
+                        <span><strong>Email:</strong> ${cvData.email}</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full text-sm">
+                        <i data-lucide="phone" class="w-4 h-4" style="color: ${styles.primaryColor}"></i>
+                        <span><strong>Phone:</strong> ${cvData.phone}</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full text-sm">
+                        <i data-lucide="map-pin" class="w-4 h-4" style="color: ${styles.primaryColor}"></i>
+                        <span><strong>Location:</strong> ${cvData.location}</span>
+                    </div>
+                    ${cvData.website ? `
+                    <div class="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full text-sm">
+                        <i data-lucide="globe" class="w-4 h-4" style="color: ${styles.primaryColor}"></i>
+                        <span><strong>Website:</strong> ${cvData.website}</span>
+                    </div>` : ''}
+                </div>
+            `;
+            
+            // Universal education section with clear "Graduation Year" label
+            const educationSection = `
+                <div class="education-section mb-6">
+                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2" style="color: ${styles.secondaryColor}; border-bottom: 2px solid ${styles.primaryColor}; padding-bottom: 8px;">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                        Education
+                    </h3>
+                    ${createEducationBlock(cvData.degree, cvData.university, cvData.graduationYear, styles.primaryColor)}
+                </div>
+            `;
+            
+            const experienceSection = `
+                <div class="experience-section mb-6">
+                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2" style="color: ${styles.secondaryColor}; border-bottom: 2px solid ${styles.primaryColor}; padding-bottom: 8px;">
+                        <i data-lucide="briefcase" class="w-5 h-5"></i>
+                        Work Experience
+                    </h3>
+                    <div class="whitespace-pre-line text-gray-700 leading-relaxed">${cvData.experience}</div>
+                </div>
+            `;
+            
+            const skillsSection = `
+                <div class="skills-section mb-6">
+                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2" style="color: ${styles.secondaryColor}; border-bottom: 2px solid ${styles.primaryColor}; padding-bottom: 8px;">
+                        <i data-lucide="wrench" class="w-5 h-5"></i>
+                        Skills & Expertise
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${cvData.skills.split(',').map(skill => `
+                            <span class="px-3 py-1 rounded-full text-sm font-medium" style="background: ${styles.primaryColor}20; color: ${styles.primaryColor}; border: 1px solid ${styles.primaryColor}40;">${skill.trim()}</span>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            const summarySection = `
+                <div class="summary-section mb-6">
+                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2" style="color: ${styles.secondaryColor}; border-bottom: 2px solid ${styles.primaryColor}; padding-bottom: 8px;">
+                        <i data-lucide="user-circle" class="w-5 h-5"></i>
+                        Professional Summary
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">${cvData.summary}</p>
+                </div>
+            `;
+            
+            // Template specific layouts
+            switch(template) {
+                case 'modern-minimalist':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        <div class="max-w-3xl mx-auto">
+                            ${headerInfo}
+                            ${contactSection}
+                            ${summarySection}
+                            ${educationSection}
+                            ${experienceSection}
+                            ${skillsSection}
+                        </div>
+                    `;
+                    
+                case 'classic-pro':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        ${headerInfo}
+                        <div class="grid grid-cols-1 gap-6">
+                            ${contactSection}
+                            ${summarySection}
+                            <div class="grid grid-cols-2 gap-6">
+                                ${educationSection}
+                                ${skillsSection}
+                            </div>
+                            ${experienceSection}
+                        </div>
+                    `;
+                    
+                case 'creative-sidebar':
+                    return `
+                        <div class="template-creative-sidebar">
+                            <div class="sidebar bg-gray-900 text-white p-8" style="background: ${styles.secondaryColor};">
+                                ${photoHtml}
+                                <div class="mt-8 space-y-4">
+                                    <div class="bg-white/10 p-3 rounded-lg">
+                                        <h4 class="text-xs uppercase tracking-wider opacity-70 mb-1 flex items-center gap-2">
+                                            <i data-lucide="calendar" class="w-3 h-3"></i> Age
+                                        </h4>
+                                        <p class="font-semibold text-lg">${cvData.age} <span class="text-sm opacity-70">years old</span></p>
+                                    </div>
+                                    <div class="bg-white/10 p-3 rounded-lg">
+                                        <h4 class="text-xs uppercase tracking-wider opacity-70 mb-1 flex items-center gap-2">
+                                            <i data-lucide="contact" class="w-3 h-3"></i> Contact
+                                        </h4>
+                                        <p class="text-sm mb-1"><strong>Email:</strong> ${cvData.email}</p>
+                                        <p class="text-sm mb-1"><strong>Phone:</strong> ${cvData.phone}</p>
+                                        <p class="text-sm"><strong>Location:</strong> ${cvData.location}</p>
+                                    </div>
+                                    <div class="bg-white/10 p-3 rounded-lg">
+                                        <h4 class="text-xs uppercase tracking-wider opacity-70 mb-1 flex items-center gap-2">
+                                            <i data-lucide="graduation-cap" class="w-3 h-3"></i> Education
+                                        </h4>
+                                        <p class="font-semibold text-sm">${cvData.university}</p>
+                                        <p class="text-xs opacity-70">${cvData.degree}</p>
+                                        <p class="text-sm mt-1"><strong>Graduation Year:</strong> ${cvData.graduationYear}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main-content p-8">
+                                ${headerInfo}
+                                ${summarySection}
+                                ${experienceSection}
+                                ${educationSection}
+                                ${skillsSection}
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'two-column-tech':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        ${headerInfo}
+                        ${contactSection}
+                        <div class="template-two-column-tech">
+                            ${summarySection}
+                            ${experienceSection}
+                            ${educationSection}
+                            ${skillsSection}
+                        </div>
+                    `;
+                    
+                case 'executive':
+                    return `
+                        <div class="text-white mb-8 pb-8 border-b border-white/20">
+                            ${styles.photoPosition === 'top-left' ? `<div class="float-left mr-6">${photoHtml}</div>` : ''}
+                            ${styles.photoPosition === 'top-right' ? `<div class="float-right ml-6">${photoHtml}</div>` : ''}
+                            <h1 class="text-5xl font-bold mb-2" style="font-size: ${styles.nameSize};">${cvData.name}</h1>
+                            <p class="text-xl opacity-90" style="font-size: ${styles.professionSize};">${cvData.profession}</p>
+                            <div class="mt-4 flex flex-wrap gap-4 text-sm opacity-90 bg-white/10 p-3 rounded-lg inline-flex">
+                                <span class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> <strong>Age:</strong> ${cvData.age} years</span>
+                                <span class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> <strong>Email:</strong> ${cvData.email}</span>
+                                <span class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> <strong>Phone:</strong> ${cvData.phone}</span>
+                                <span class="flex items-center gap-2"><i data-lucide="calendar-days" class="w-4 h-4"></i> <strong>Graduation:</strong> ${cvData.graduationYear}</span>
+                            </div>
+                        </div>
+                        <div class="bg-white p-8 rounded-lg shadow-lg">
+                            ${summarySection}
+                            <div class="grid grid-cols-2 gap-8">
+                                ${experienceSection}
+                                <div>
+                                    ${educationSection}
+                                    ${skillsSection}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'timeline':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        ${headerInfo}
+                        ${contactSection}
+                        <div class="template-timeline pl-32">
+                            <div class="relative mb-8">
+                                <div class="absolute -left-32 w-24 text-right text-sm font-bold text-gray-500">Summary</div>
+                                <div class="absolute -left-[25px] w-3 h-3 rounded-full" style="background: ${styles.primaryColor};"></div>
+                                ${summarySection.replace('border-bottom: 2px solid ' + styles.primaryColor, 'border: none;')}
+                            </div>
+                            <div class="relative mb-8">
+                                <div class="absolute -left-32 w-24 text-right text-sm font-bold text-gray-500">Education</div>
+                                <div class="absolute -left-[25px] w-3 h-3 rounded-full" style="background: ${styles.primaryColor};"></div>
+                                ${educationSection.replace('border-bottom: 2px solid ' + styles.primaryColor, 'border: none;')}
+                            </div>
+                            <div class="relative mb-8">
+                                <div class="absolute -left-32 w-24 text-right text-sm font-bold text-gray-500">Experience</div>
+                                <div class="absolute -left-[25px] w-3 h-3 rounded-full" style="background: ${styles.primaryColor};"></div>
+                                ${experienceSection.replace('border-bottom: 2px solid ' + styles.primaryColor, 'border: none;')}
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-32 w-24 text-right text-sm font-bold text-gray-500">Skills</div>
+                                <div class="absolute -left-[25px] w-3 h-3 rounded-full" style="background: ${styles.primaryColor};"></div>
+                                ${skillsSection.replace('border-bottom: 2px solid ' + styles.primaryColor, 'border: none;')}
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'cards':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        ${headerInfo}
+                        <div class="template-cards">
+                            <div class="section-card">
+                                <h3 class="font-bold mb-2 flex items-center gap-2" style="color: ${styles.primaryColor};"><i data-lucide="user" class="w-4 h-4"></i> Personal Info</h3>
+                                <div class="grid grid-cols-2 gap-2 text-sm">
+                                    <div><strong>Age:</strong> ${cvData.age} years</div>
+                                    <div><strong>Location:</strong> ${cvData.location}</div>
+                                    <div><strong>Email:</strong> ${cvData.email}</div>
+                                    <div><strong>Phone:</strong> ${cvData.phone}</div>
+                                </div>
+                            </div>
+                            <div class="section-card">
+                                ${summarySection.replace(/<h3.*?>.*?<\/h3>/, '')}
+                            </div>
+                            <div class="section-card">
+                                ${educationSection.replace(/<h3.*?>.*?<\/h3>/, '')}
+                            </div>
+                            <div class="section-card">
+                                ${experienceSection.replace(/<h3.*?>.*?<\/h3>/, '')}
+                            </div>
+                            <div class="section-card">
+                                ${skillsSection.replace(/<h3.*?>.*?<\/h3>/, '')}
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'dark-pro':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        <div class="border-b border-gray-700 pb-6 mb-6">
+                            ${headerInfo}
+                            <div class="flex flex-wrap gap-3 mt-4 text-gray-300 text-sm">
+                                <div class="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-full">
+                                    <i data-lucide="calendar" class="w-4 h-4 text-blue-400"></i> 
+                                    <span><strong>Age:</strong> ${cvData.age} years</span>
+                                </div>
+                                <div class="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-full">
+                                    <i data-lucide="mail" class="w-4 h-4 text-blue-400"></i> 
+                                    <span><strong>Email:</strong> ${cvData.email}</span>
+                                </div>
+                                <div class="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-full">
+                                    <i data-lucide="phone" class="w-4 h-4 text-blue-400"></i> 
+                                    <span><strong>Phone:</strong> ${cvData.phone}</span>
+                                </div>
+                                <div class="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-full">
+                                    <i data-lucide="calendar-days" class="w-4 h-4 text-blue-400"></i> 
+                                    <span><strong>Graduation Year:</strong> ${cvData.graduationYear}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="md:col-span-2 space-y-6">
+                                ${summarySection}
+                                ${experienceSection}
+                            </div>
+                            <div class="space-y-6 border-l border-gray-700 pl-6">
+                                ${educationSection}
+                                ${skillsSection}
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'colorful':
+                    return `
+                        <div class="cv-content">
+                            ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                            ${headerInfo}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                                <div class="space-y-6">
+                                    ${summarySection}
+                                    ${experienceSection}
+                                </div>
+                                <div class="space-y-6 bg-gray-50 p-6 rounded-xl">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                                        <h4 class="font-bold mb-3 flex items-center gap-2" style="color: ${styles.primaryColor};">
+                                            <i data-lucide="contact" class="w-5 h-5"></i> Contact Details
+                                        </h4>
+                                        <div class="space-y-3 text-sm">
+                                            <div class="flex items-center gap-2 p-2 bg-gray-50 rounded">
+                                                <i data-lucide="calendar" class="w-4 h-4" style="color: ${styles.primaryColor}"></i> 
+                                                <span><strong>Age:</strong> ${cvData.age} years</span>
+                                            </div>
+                                            <div class="flex items-center gap-2 p-2 bg-gray-50 rounded">
+                                                <i data-lucide="mail" class="w-4 h-4" style="color: ${styles.primaryColor}"></i> 
+                                                <span><strong>Email:</strong> ${cvData.email}</span>
+                                            </div>
+                                            <div class="flex items-center gap-2 p-2 bg-gray-50 rounded">
+                                                <i data-lucide="phone" class="w-4 h-4" style="color: ${styles.primaryColor}"></i> 
+                                                <span><strong>Phone:</strong> ${cvData.phone}</span>
+                                            </div>
+                                            <div class="flex items-center gap-2 p-2 bg-gray-50 rounded">
+                                                <i data-lucide="map-pin" class="w-4 h-4" style="color: ${styles.primaryColor}"></i> 
+                                                <span><strong>Location:</strong> ${cvData.location}</span>
+                                            </div>
+                                            <div class="flex items-center gap-2 p-2 bg-blue-50 rounded">
+                                                <i data-lucide="calendar-days" class="w-4 h-4" style="color: ${styles.primaryColor}"></i> 
+                                                <span><strong>Graduation Year:</strong> ${cvData.graduationYear}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ${educationSection}
+                                    ${skillsSection}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'grid':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        <div class="template-grid">
+                            <div class="col-span-12 border-b-2 pb-4 mb-4" style="border-color: ${styles.primaryColor};">
+                                ${headerInfo}
+                                <div class="flex flex-wrap gap-4 text-sm mt-2">
+                                    <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> ${cvData.age} years</span>
+                                    <span class="flex items-center gap-1"><i data-lucide="mail" class="w-3 h-3"></i> ${cvData.email}</span>
+                                    <span class="flex items-center gap-1"><i data-lucide="phone" class="w-3 h-3"></i> ${cvData.phone}</span>
+                                </div>
+                            </div>
+                            <div class="col-span-8">
+                                ${summarySection}
+                                ${experienceSection}
+                            </div>
+                            <div class="col-span-4 border-l pl-4" style="border-color: ${styles.primaryColor};">
+                                ${educationSection}
+                                ${skillsSection}
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'centered':
+                    return `
+                        <div class="template-centered">
+                            ${styles.photoPosition === 'top-center' ? photoHtml : ''}
+                            ${headerInfo}
+                            <div class="flex justify-center gap-6 text-sm mb-8 flex-wrap">
+                                <span class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4" style="color: ${styles.primaryColor};"></i> ${cvData.age} years</span>
+                                <span class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4" style="color: ${styles.primaryColor};"></i> ${cvData.email}</span>
+                                <span class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4" style="color: ${styles.primaryColor};"></i> ${cvData.phone}</span>
+                            </div>
+                            ${summarySection}
+                            ${educationSection}
+                            ${experienceSection}
+                            ${skillsSection}
+                        </div>
+                    `;
+                    
+                case 'left-heavy':
+                    return `
+                        <div class="template-left-heavy">
+                            ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                            ${headerInfo}
+                            ${contactSection}
+                            ${summarySection}
+                            ${educationSection}
+                            ${experienceSection}
+                            ${skillsSection}
+                        </div>
+                    `;
+                    
+                case 'right-heavy':
+                    return `
+                        <div class="template-right-heavy">
+                            ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                            ${headerInfo}
+                            <div class="flex flex-wrap justify-end gap-4 text-sm mb-6">
+                                <span class="flex items-center gap-2"><strong>Age:</strong> ${cvData.age} <i data-lucide="calendar" class="w-4 h-4" style="color: ${styles.primaryColor};"></i></span>
+                                <span class="flex items-center gap-2"><strong>Email:</strong> ${cvData.email} <i data-lucide="mail" class="w-4 h-4" style="color: ${styles.primaryColor};"></i></span>
+                                <span class="flex items-center gap-2"><strong>Phone:</strong> ${cvData.phone} <i data-lucide="phone" class="w-4 h-4" style="color: ${styles.primaryColor};"></i></span>
+                            </div>
+                            ${summarySection}
+                            ${educationSection}
+                            ${experienceSection}
+                            ${skillsSection}
+                        </div>
+                    `;
+                    
+                case 'compact':
+                    return `
+                        ${styles.photoPosition === 'inline' ? photoHtml : ''}
+                        <div class="flex items-start gap-4 mb-4 border-b-2 pb-4" style="border-color: ${styles.primaryColor};">
+                            ${styles.photoPosition !== 'inline' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'top-center' ? `<div class="mr-4">${photoHtml}</div>` : ''}
+                            <div class="flex-1">
+                                <h1 class="font-bold" style="font-size: ${styles.nameSize}; color: ${styles.nameColor};">${cvData.name}</h1>
+                                <p style="font-size: ${styles.professionSize}; color: ${styles.professionColor};">${cvData.profession}</p>
+                                <div class="flex flex-wrap gap-2 mt-2 text-xs">
+                                    <span class="bg-blue-50 px-2 py-1 rounded flex items-center gap-1">
+                                        <i data-lucide="calendar" class="w-3 h-3 inline" style="color: ${styles.primaryColor}"></i> 
+                                        <strong>Age:</strong> ${cvData.age} years
+                                    </span>
+                                    <span class="bg-gray-100 px-2 py-1 rounded flex items-center gap-1">
+                                        <i data-lucide="mail" class="w-3 h-3 inline" style="color: ${styles.primaryColor}"></i> 
+                                        <strong>Email:</strong> ${cvData.email}
+                                    </span>
+                                    <span class="bg-gray-100 px-2 py-1 rounded flex items-center gap-1">
+                                        <i data-lucide="phone" class="w-3 h-3 inline" style="color: ${styles.primaryColor}"></i> 
+                                        <strong>Phone:</strong> ${cvData.phone}
+                                    </span>
+                                    <span class="bg-gray-100 px-2 py-1 rounded flex items-center gap-1">
+                                        <i data-lucide="map-pin" class="w-3 h-3 inline" style="color: ${styles.primaryColor}"></i> 
+                                        <strong>Location:</strong> ${cvData.location}
+                                    </span>
+                                    <span class="bg-purple-50 px-2 py-1 rounded flex items-center gap-1">
+                                        <i data-lucide="calendar-days" class="w-3 h-3 inline" style="color: ${styles.primaryColor}"></i> 
+                                        <strong>Graduation Year:</strong> ${cvData.graduationYear}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>${summarySection}</div>
+                            <div>${skillsSection}</div>
+                            <div class="col-span-2">${experienceSection}</div>
+                            <div class="col-span-2">${educationSection}</div>
+                        </div>
+                    `;
+                    
+                case 'magazine':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        <div class="mb-8 text-center border-b-4 border-black pb-4">
+                            <h1 class="headline mb-2" style="font-size: ${styles.nameSize};">${cvData.name}</h1>
+                            <p class="text-xl uppercase tracking-widest text-gray-600 mb-4" style="font-size: ${styles.professionSize};">${cvData.profession}</p>
+                            <div class="flex justify-center gap-4 text-sm font-medium flex-wrap">
+                                <span class="flex items-center gap-2 bg-black text-white px-3 py-1">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i> AGE: ${cvData.age} YEARS
+                                </span>
+                                <span class="flex items-center gap-2 bg-gray-200 px-3 py-1">
+                                    <i data-lucide="graduation-cap" class="w-4 h-4"></i> GRADUATION YEAR: ${cvData.graduationYear}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-6">
+                            <div class="col-span-2">
+                                ${summarySection}
+                                ${experienceSection}
+                            </div>
+                            <div class="bg-black text-white p-4 -my-4">
+                                <h4 class="font-bold mb-4 uppercase border-b border-white pb-2 flex items-center gap-2">
+                                    <i data-lucide="contact" class="w-4 h-4"></i> Contact Info
+                                </h4>
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex items-start gap-2">
+                                        <i data-lucide="mail" class="w-4 h-4 mt-0.5"></i> 
+                                        <div><strong>Email:</strong><br/>${cvData.email}</div>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <i data-lucide="phone" class="w-4 h-4 mt-0.5"></i> 
+                                        <div><strong>Phone:</strong><br/>${cvData.phone}</div>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <i data-lucide="map-pin" class="w-4 h-4 mt-0.5"></i> 
+                                        <div><strong>Location:</strong><br/>${cvData.location}</div>
+                                    </div>
+                                </div>
+                                <h4 class="font-bold mt-8 mb-4 uppercase border-b border-white pb-2 flex items-center gap-2">
+                                    <i data-lucide="graduation-cap" class="w-4 h-4"></i> Education
+                                </h4>
+                                <div class="text-sm">
+                                    <div class="font-semibold">${cvData.university}</div>
+                                    <div class="text-gray-400 mb-2">${cvData.degree}</div>
+                                    <div class="text-xs bg-white/20 inline-block px-2 py-1">Class of ${cvData.graduationYear}</div>
+                                </div>
+                                <h4 class="font-bold mt-8 mb-4 uppercase border-b border-white pb-2 flex items-center gap-2">
+                                    <i data-lucide="wrench" class="w-4 h-4"></i> Skills
+                                </h4>
+                                <div class="flex flex-wrap gap-2 text-xs">
+                                    ${cvData.skills.split(',').map(s => `<span class="border border-white px-2 py-1">${s.trim()}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'infographic':
+                    return `
+                        <div class="flex gap-8">
+                            <div class="w-1/3 bg-gray-100 p-6 rounded-xl">
+                                ${styles.photoPosition !== 'hidden' ? photoHtml : ''}
+                                <div class="mt-6 space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: ${styles.primaryColor};">
+                                            <i data-lucide="calendar" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Age</div>
+                                            <div class="font-bold">${cvData.age} Years</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: ${styles.primaryColor};">
+                                            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Graduated</div>
+                                            <div class="font-bold">${cvData.graduationYear}</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: ${styles.primaryColor};">
+                                            <i data-lucide="mail" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Email</div>
+                                            <div class="font-bold text-sm">${cvData.email}</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: ${styles.primaryColor};">
+                                            <i data-lucide="phone" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Phone</div>
+                                            <div class="font-bold text-sm">${cvData.phone}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-2/3">
+                                ${headerInfo}
+                                ${summarySection}
+                                ${experienceSection}
+                                <div class="mb-6">
+                                    <h3 class="font-bold mb-3">Skills Level</h3>
+                                    <div class="space-y-3">
+                                        ${cvData.skills.split(',').slice(0,5).map((skill, i) => `
+                                            <div>
+                                                <div class="flex justify-between text-sm mb-1">
+                                                    <span>${skill.trim()}</span>
+                                                    <span>${90 - (i * 10)}%</span>
+                                                </div>
+                                                <div class="template-infographic">
+                                                    <div class="skill-bar">
+                                                        <div class="skill-fill" style="width: ${90 - (i * 10)}%; background: ${styles.primaryColor};"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'minimal-text':
+                    return `
+                        <div class="max-w-2xl mx-auto">
+                            ${styles.photoPosition === 'top-center' ? photoHtml : ''}
+                            <div class="text-center mb-12">
+                                <h1 class="text-4xl font-light tracking-widest mb-4" style="font-size: ${styles.nameSize};">${cvData.name}</h1>
+                                <p class="text-gray-500 uppercase tracking-widest text-sm mb-8" style="font-size: ${styles.professionSize};">${cvData.profession}</p>
+                                <div class="flex justify-center gap-8 text-xs text-gray-400">
+                                    <span>Age: ${cvData.age}</span>
+                                    <span>${cvData.email}</span>
+                                    <span>${cvData.phone}</span>
+                                    <span>Graduated: ${cvData.graduationYear}</span>
+                                </div>
+                            </div>
+                            <div class="space-y-8 text-gray-600 leading-loose">
+                                ${summarySection.replace(/<h3.*?>.*?<\/h3>/, '<div class="text-xs uppercase tracking-widest text-gray-400 mb-2">About</div>')}
+                                ${experienceSection.replace(/<h3.*?>.*?<\/h3>/, '<div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Experience</div>')}
+                                ${educationSection.replace(/<h3.*?>.*?<\/h3>/, '<div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Education</div>')}
+                                ${skillsSection.replace(/<h3.*?>.*?<\/h3>/, '<div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Skills</div>')}
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'bold-type':
+                    return `
+                        <div class="max-w-4xl mx-auto">
+                            ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                            <h1 class="template-bold-type mb-2" style="font-size: ${styles.nameSize}; color: ${styles.nameColor};">${cvData.name}</h1>
+                            <p class="text-2xl font-bold mb-6" style="color: ${styles.professionColor}; font-size: ${styles.professionSize};">${cvData.profession}</p>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-sm border-y-2 py-4" style="border-color: ${styles.primaryColor};">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="calendar" class="w-8 h-8" style="color: ${styles.primaryColor};"></i>
+                                    <div>
+                                        <div class="font-bold text-xs text-gray-500 uppercase">Age</div>
+                                        <div class="text-lg font-bold">${cvData.age} Years</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="graduation-cap" class="w-8 h-8" style="color: ${styles.primaryColor};"></i>
+                                    <div>
+                                        <div class="font-bold text-xs text-gray-500 uppercase">Graduation Year</div>
+                                        <div class="text-lg font-bold">${cvData.graduationYear}</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="mail" class="w-8 h-8" style="color: ${styles.primaryColor};"></i>
+                                    <div>
+                                        <div class="font-bold text-xs text-gray-500 uppercase">Email Address</div>
+                                        <div class="text-lg font-bold truncate">${cvData.email}</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="phone" class="w-8 h-8" style="color: ${styles.primaryColor};"></i>
+                                    <div>
+                                        <div class="font-bold text-xs text-gray-500 uppercase">Phone Number</div>
+                                        <div class="text-lg font-bold">${cvData.phone}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                ${summarySection}
+                                ${experienceSection}
+                                ${educationSection}
+                                ${skillsSection}
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'photo-focus':
+                    return `
+                        <div class="template-photo-focus text-center">
+                            ${photoHtml}
+                            <h1 class="text-4xl font-bold mb-2" style="font-size: ${styles.nameSize}; color: ${styles.nameColor};">${cvData.name}</h1>
+                            <p class="text-xl text-gray-600 mb-6" style="font-size: ${styles.professionSize}; color: ${styles.professionColor};">${cvData.profession}</p>
+                            
+                            <div class="flex justify-center gap-4 mb-8 text-sm flex-wrap">
+                                <div class="text-center bg-gray-50 p-3 rounded-lg min-w-[100px]">
+                                    <i data-lucide="calendar" class="w-5 h-5 mx-auto mb-1" style="color: ${styles.primaryColor};"></i>
+                                    <div class="font-bold text-lg">${cvData.age}</div>
+                                    <div class="text-xs text-gray-500">Years Old</div>
+                                </div>
+                                <div class="text-center bg-gray-50 p-3 rounded-lg min-w-[100px]">
+                                    <i data-lucide="graduation-cap" class="w-5 h-5 mx-auto mb-1" style="color: ${styles.primaryColor};"></i>
+                                    <div class="font-bold text-lg">${cvData.graduationYear}</div>
+                                    <div class="text-xs text-gray-500">Graduation Year</div>
+                                </div>
+                                <div class="text-center bg-gray-50 p-3 rounded-lg min-w-[140px]">
+                                    <i data-lucide="mail" class="w-5 h-5 mx-auto mb-1" style="color: ${styles.primaryColor};"></i>
+                                    <div class="font-bold text-xs truncate max-w-[120px]">${cvData.email}</div>
+                                    <div class="text-xs text-gray-500">Email Address</div>
+                                </div>
+                                <div class="text-center bg-gray-50 p-3 rounded-lg min-w-[100px]">
+                                    <i data-lucide="phone" class="w-5 h-5 mx-auto mb-1" style="color: ${styles.primaryColor};"></i>
+                                    <div class="font-bold text-sm">${cvData.phone}</div>
+                                    <div class="text-xs text-gray-500">Phone Number</div>
+                                </div>
+                            </div>
+                            
+                            <div class="max-w-2xl mx-auto text-left">
+                                ${summarySection}
+                                ${educationSection}
+                                ${experienceSection}
+                                ${skillsSection}
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'contact-bottom':
+                    return `
+                        <div class="template-contact-bottom h-full flex flex-col">
+                            ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                            ${headerInfo}
+                            ${summarySection}
+                            ${educationSection}
+                            ${experienceSection}
+                            ${skillsSection}
+                            
+                            <div class="contact-section mt-auto pt-8 border-t-2" style="border-color: ${styles.primaryColor};">
+                                <h3 class="text-lg font-bold mb-4 flex items-center gap-2" style="color: ${styles.secondaryColor};">
+                                    <i data-lucide="contact" class="w-5 h-5"></i>
+                                    Contact Information
+                                </h3>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                        <i data-lucide="calendar" class="w-5 h-5" style="color: ${styles.primaryColor};"></i>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Age</div>
+                                            <div class="font-semibold">${cvData.age} years</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                        <i data-lucide="mail" class="w-5 h-5" style="color: ${styles.primaryColor};"></i>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Email Address</div>
+                                            <div class="font-semibold text-sm">${cvData.email}</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                        <i data-lucide="phone" class="w-5 h-5" style="color: ${styles.primaryColor};"></i>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Phone Number</div>
+                                            <div class="font-semibold">${cvData.phone}</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                        <i data-lucide="map-pin" class="w-5 h-5" style="color: ${styles.primaryColor};"></i>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Location</div>
+                                            <div class="font-semibold">${cvData.location}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 p-3 bg-gray-50 rounded-lg flex items-center gap-3">
+                                    <i data-lucide="graduation-cap" class="w-5 h-5" style="color: ${styles.primaryColor};"></i>
+                                    <div>
+                                        <div class="text-xs text-gray-500">Graduation Year</div>
+                                        <div class="font-semibold">${cvData.graduationYear} - ${cvData.degree} from ${cvData.university}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                case 'striped':
+                    return `
+                        ${styles.photoPosition !== 'top-center' && styles.photoPosition !== 'hidden' && styles.photoPosition !== 'inline' ? photoHtml : ''}
+                        ${headerInfo}
+                        ${contactSection}
+                        <div class="template-striped">
+                            <section class="mb-0">
+                                ${summarySection}
+                            </section>
+                            <section class="mb-0">
+                                ${educationSection}
+                            </section>
+                            <section class="mb-0">
+                                ${experienceSection}
+                            </section>
+                            <section class="mb-0">
+                                ${skillsSection}
+                            </section>
+                        </div>
+                    `;
+                    
+                case 'elegant':
+                    return `
+                        <div class="max-w-3xl mx-auto">
+                            ${styles.photoPosition === 'top-center' ? photoHtml : ''}
+                            <div class="text-center border-b-2 border-gray-800 pb-6 mb-6">
+                                <h1 class="text-5xl mb-3" style="font-size: ${styles.nameSize}; color: ${styles.nameColor};">${cvData.name}</h1>
+                                <p class="text-lg italic text-gray-600" style="font-size: ${styles.professionSize}; color: ${styles.professionColor};">${cvData.profession}</p>
+                                <div class="mt-4 flex justify-center gap-4 text-sm flex-wrap">
+                                    <span class="flex items-center gap-2 border border-gray-400 px-3 py-1 rounded-full">
+                                        <i data-lucide="calendar" class="w-4 h-4"></i> 
+                                        <strong>Age:</strong> ${cvData.age} years
+                                    </span>
+                                    <span class="flex items-center gap-2 border border-gray-400 px-3 py-1 rounded-full">
+                                        <i data-lucide="graduation-cap" class="w-4 h-4"></i> 
+                                        <strong>Graduation Year:</strong> ${cvData.graduationYear}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-8">
+                                <div class="col-span-1 border-r border-gray-300 pr-6 text-right">
+                                    <div class="mb-6">
+                                        <h4 class="font-bold mb-3 text-sm uppercase tracking-wider flex items-center justify-end gap-2">
+                                            Contact <i data-lucide="contact" class="w-4 h-4"></i>
+                                        </h4>
+                                        <p class="text-sm text-gray-600 mb-2"><strong>Email:</strong><br/>${cvData.email}</p>
+                                        <p class="text-sm text-gray-600 mb-2"><strong>Phone:</strong><br/>${cvData.phone}</p>
+                                        <p class="text-sm text-gray-600"><strong>Location:</strong><br/>${cvData.location}</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-3 text-sm uppercase tracking-wider flex items-center justify-end gap-2">
+                                            Education <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                                        </h4>
+                                        <p class="text-sm font-semibold">${cvData.university}</p>
+                                        <p class="text-sm text-gray-600 italic mb-2">${cvData.degree}</p>
+                                        <p class="text-xs text-gray-500"><strong>Graduation Year:</strong> ${cvData.graduationYear}</p>
+                                    </div>
+                                </div>
+                                <div class="col-span-2">
+                                    ${summarySection}
+                                    ${experienceSection}
+                                    ${skillsSection}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                default:
+                    return headerInfo + contactSection + summarySection + educationSection + experienceSection + skillsSection;
+            }
+        }
+
+        function setLayout(type) {
+            const container = document.getElementById('cv-wrapper');
+            switch(type) {
+                case 'split':
+                    container.style.maxWidth = '1200px';
+                    break;
+                case 'centered':
+                    container.style.maxWidth = '700px';
+                    break;
+                case 'wide':
+                    container.style.maxWidth = '100%';
+                    break;
+                default:
+                    container.style.maxWidth = '896px'; // max-w-4xl
+            }
+        }
+
+        // Initialize with default data
+        window.addEventListener('load', () => {
+            // Trigger initial render
+            updateContent();
+        });
+    </script>
+</body>
+</html>
